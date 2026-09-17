@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+spacy
+matplotlib
+seaborn
+wordcloud
+streamlit
+jupyter
+ipykernel
+joblib
+torch
+transformers
+datasets
+accelerate

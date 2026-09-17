@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+dataset/*.json
+dataset/*.csv
+dataset/processed/*.csv
+
+# Trained models
+models/*.pkl
+models/*.joblib
+models/*.pt
+models/*.bin
+models/*.safetensors
+
+# Hugging Face cache
+.cache/
+huggingface_cache/
+
+# Environment variables
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
