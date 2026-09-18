@@ -28,12 +28,5 @@ notebooks/models/
 .cache/
 huggingface_cache/
 
-# Environment variables
-.env
-
-# OS
-.DS_Store
-Thumbs.db
-
 # VS Code
 .vscode/
