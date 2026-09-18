@@ -21,6 +21,8 @@ models/*.joblib
 models/*.pt
 models/*.bin
 models/*.safetensors
+models/
+notebooks/models/
 
 # Hugging Face cache
 .cache/
