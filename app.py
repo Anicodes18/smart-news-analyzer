@@ -79,3 +79,51 @@ if st.button("Analyze Article"):
         st.subheader("✂️ Article Summary")
 
         st.info(summary)
+
+        st.divider()
+
+        st.subheader("ℹ️ About the Project")
+
+        st.write(
+            """
+            Smart News Analyzer is an NLP application that analyzes news articles
+            using two complementary NLP tasks:
+
+            • News Classification — A fine-tuned DistilBERT model predicts the
+            article category across 42 news categories.
+
+            • Text Summarization — A pretrained DistilBART model generates a
+            concise summary, with chunk-based processing for longer articles.
+            """
+        )
+
+        with st.expander("🔧 Model Information"):
+            st.write(
+                """
+                **Classification**
+                - Model: DistilBERT
+                - Task: Multi-class text classification
+                - Categories: 42
+                - Training dataset: HuffPost News Category Dataset
+                - Input: Article headline and description
+
+                **Summarization**
+                - Model: DistilBART CNN
+                - Task: Abstractive text summarization
+                - Long articles: Two-stage chunk-based summarization
+                """
+            )
+
+        with st.expander("⚠️ Limitations"):
+            st.write(
+                """
+                - The classification dataset contains overlapping and closely
+                related news categories.
+                - Class distribution is imbalanced, so confidence may vary
+                across categories.
+                - The displayed confidence is the model's softmax probability
+                and is not a calibrated probability of correctness.
+                - The summarization model is pretrained and was not fine-tuned
+                specifically on the HuffPost dataset.
+                """
+            )
