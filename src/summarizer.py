@@ -1,4 +1,5 @@
 import torch
+import streamlit as st
 
 from transformers import (
     AutoTokenizer,
@@ -16,15 +17,24 @@ device = torch.device(
 
 
 # Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained(
-    MODEL_NAME
-)
+@st.cache_resource
+def load_summarizer():
 
-summarizer_model = AutoModelForSeq2SeqLM.from_pretrained(
-    MODEL_NAME
-)
+    tokenizer = AutoTokenizer.from_pretrained(
+        MODEL_NAME
+    )
 
-summarizer_model.to(device)
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        MODEL_NAME
+    )
+
+    model.to(device)
+    model.eval()
+
+    return tokenizer, model
+
+
+tokenizer, summarizer_model = load_summarizer()
 
 
 def summarize_text(

@@ -28,6 +28,9 @@ article_text = st.text_area(
     placeholder="Paste your article here..."
 )
 
+if article_text.strip():
+    word_count = len(article_text.split())
+    st.caption(f"Article length: {word_count:,} words")
 
 # Analyze button
 if st.button("Analyze Article"):
@@ -68,8 +71,11 @@ if st.button("Analyze Article"):
                 f"{confidence:.2%}"
             )
 
+        st.progress(
+            confidence,
+            text=f"Model confidence: {confidence:.2%}"
+        )
 
-        # Summary
         st.subheader("✂️ Article Summary")
 
-        st.write(summary)
+        st.info(summary)

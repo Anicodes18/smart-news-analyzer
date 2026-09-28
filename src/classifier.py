@@ -1,5 +1,6 @@
 import os
 import torch
+import streamlit as st
 
 from transformers import (
     AutoTokenizer,
@@ -25,16 +26,24 @@ device = torch.device(
 
 
 # Load tokenizer
-tokenizer = AutoTokenizer.from_pretrained(
-    MODEL_PATH
-)
+@st.cache_resource
+def load_classifier():
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        MODEL_PATH
+    )
+
+    model = AutoModelForSequenceClassification.from_pretrained(
+        MODEL_PATH
+    )
+
+    model.to(device)
+    model.eval()
+
+    return tokenizer, model
 
 
-# Load trained classifier
-model = AutoModelForSequenceClassification.from_pretrained(
-    MODEL_PATH
-)
-
+tokenizer, model = load_classifier()
 model.to(device)
 model.eval()
 
