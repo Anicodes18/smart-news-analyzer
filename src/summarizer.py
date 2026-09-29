@@ -1,3 +1,4 @@
+import re
 import torch
 import streamlit as st
 
@@ -73,6 +74,35 @@ def summarize_text(
 
     return summary
 
+def format_three_line_summary(summary):
+    # Normalize spaces before punctuation
+    summary = re.sub(r"\s+([.!?])", r"\1", summary.strip())
+
+    # Split into sentences
+    sentences = re.split(
+        r'(?<=[.!?])\s+',
+        summary
+    )
+
+    sentences = [
+        sentence.strip()
+        for sentence in sentences
+        if sentence.strip()
+    ]
+
+    # If there are already 3 or fewer sentences
+    if len(sentences) <= 3:
+        return "\n".join(sentences)
+
+    # Keep the first two sentences
+    # and combine everything else into the third
+    first_two = sentences[:2]
+    third = " ".join(sentences[2:])
+
+    return "\n".join(
+        first_two + [third]
+    )
+
 
 def split_text_into_chunks(
     text,
@@ -101,8 +131,8 @@ def summarize_long_text(
     chunk_size=400,
     chunk_max_length=80,
     chunk_min_length=30,
-    final_max_length=120,
-    final_min_length=50
+    final_max_length=90,
+    final_min_length=45
 ):
     """
     Summarize long text using a two-stage approach.
@@ -135,7 +165,7 @@ def summarize_long_text(
     # If the article fits into one chunk,
     # return its summary directly.
     if len(chunks) == 1:
-        return combined_summary
+        return format_three_line_summary(combined_summary)
 
     # Create a final summary from the
     # individual chunk summaries.
@@ -145,4 +175,4 @@ def summarize_long_text(
         min_length=final_min_length
     )
 
-    return final_summary
+    return format_three_line_summary(final_summary)
